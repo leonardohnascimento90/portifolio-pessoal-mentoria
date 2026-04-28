@@ -9,7 +9,7 @@ const router = express.Router();
  * /tools:
  *   get:
  *     summary: Lista todas as ferramentas disponíveis
- *     tags: [Tools]
+ *     tags: [Ferramentas]
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -25,7 +25,7 @@ router.get('/', verifyToken, getAll);
  * /tools/{id}:
  *   get:
  *     summary: Retorna uma ferramenta pelo ID
- *     tags: [Tools]
+ *     tags: [Ferramentas]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -50,7 +50,7 @@ router.get('/:id', verifyToken, getById);
  * /tools:
  *   post:
  *     summary: Cadastra uma nova ferramenta
- *     tags: [Tools]
+ *     tags: [Ferramentas]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -60,21 +60,21 @@ router.get('/:id', verifyToken, getById);
  *           schema:
  *             type: object
  *             required:
- *               - name
- *               - category
- *               - dailyRate
- *               - weeklyRate
+ *               - nome
+ *               - categoria
+ *               - valorDiaria
+ *               - valorSemanal
  *             properties:
- *               name:
+ *               nome:
  *                 type: string
  *                 example: Serra de bancada
- *               category:
+ *               categoria:
  *                 type: string
  *                 example: Elétrica
- *               dailyRate:
+ *               valorDiaria:
  *                 type: number
  *                 example: 120
- *               weeklyRate:
+ *               valorSemanal:
  *                 type: number
  *                 example: 600
  *     responses:
@@ -92,7 +92,7 @@ router.post('/', verifyToken, create);
  * /tools/{id}/status:
  *   patch:
  *     summary: Atualiza o status de uma ferramenta
- *     tags: [Tools]
+ *     tags: [Ferramentas]
  *     security:
  *       - bearerAuth: []
  *     parameters:

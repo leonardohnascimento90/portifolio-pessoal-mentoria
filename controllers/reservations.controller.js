@@ -1,5 +1,5 @@
 const { tools, reservations } = require('../utils/data');
-const { mapReservationsToResponse, mapReservationToResponse } = require('../utils/mappers');
+const { mapReservationsToResponse, mapReservationToResponse, normalizeReservationInput } = require('../utils/mappers');
 
 const parseDate = (value) => {
   const parsed = new Date(value);
@@ -30,27 +30,28 @@ const getAll = (req, res) => {
 };
 
 const create = (req, res) => {
-  const { toolId, startDate, endDate } = req.body;
+  const normalized = normalizeReservationInput(req.body);
+  const { toolId, startDate, endDate } = normalized;
   const tool = tools.find(t => t.id === toolId);
 
   if (!tool) {
-    return res.status(404).json({ message: 'Tool not found' });
+    return res.status(404).json({ message: 'Ferramenta não encontrada' });
   }
 
   if (tool.status === 'maintenance') {
-    return res.status(400).json({ message: 'Tool is under maintenance' });
+    return res.status(400).json({ message: 'Ferramenta está em manutenção' });
   }
 
   const start = parseDate(startDate);
   const end = parseDate(endDate);
 
   if (!start || !end || start > end) {
-    return res.status(400).json({ message: 'Invalid date range' });
+    return res.status(400).json({ message: 'Intervalo de datas inválido' });
   }
 
   const conflict = reservations.some(r => r.toolId === toolId && hasConflict(start, end, parseDate(r.startDate), parseDate(r.endDate)));
   if (conflict) {
-    return res.status(400).json({ message: 'Date conflict or tool unavailable' });
+    return res.status(400).json({ message: 'Conflito de data ou ferramenta indisponível' });
   }
 
   const id = reservations.length + 1;
@@ -70,11 +71,11 @@ const create = (req, res) => {
 
 const remove = (req, res) => {
   const index = reservations.findIndex(r => r.id == req.params.id);
-  if (index === -1) return res.status(404).json({ message: 'Reservation not found' });
+  if (index === -1) return res.status(404).json({ message: 'Reserva não encontrada' });
 
   const [deleted] = reservations.splice(index, 1);
   syncToolStatus(deleted.toolId);
-  res.json({ message: 'Reservation deleted' });
+  res.json({ message: 'Reserva deletada' });
 };
 
 module.exports = {

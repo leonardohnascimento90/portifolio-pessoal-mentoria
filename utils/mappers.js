@@ -5,6 +5,20 @@ const statusMap = {
   reserved: 'reservado',
 };
 
+// Normaliza campos de entrada em português para inglês
+const normalizeToolInput = (input) => ({
+  name: input.nome || input.name,
+  category: input.categoria || input.category,
+  dailyRate: input.valorDiaria || input.dailyRate,
+  weeklyRate: input.valorSemanal || input.weeklyRate,
+});
+
+const normalizeReservationInput = (input) => ({
+  toolId: input.ferramentaId || input.toolId,
+  startDate: input.dataInicio || input.startDate,
+  endDate: input.dataFim || input.endDate,
+});
+
 const mapToolToResponse = (tool) => ({
   id: tool.id,
   nome: tool.name,
@@ -17,6 +31,7 @@ const mapToolToResponse = (tool) => ({
 const mapReservationToResponse = (reservation) => ({
   id: reservation.id,
   ferramentaId: reservation.toolId,
+  usuarioId: reservation.userId,
   dataInicio: reservation.startDate,
   dataFim: reservation.endDate,
   status: statusMap[reservation.status] || reservation.status,
@@ -30,4 +45,6 @@ module.exports = {
   mapReservationToResponse,
   mapToolsToResponse,
   mapReservationsToResponse,
+  normalizeToolInput,
+  normalizeReservationInput,
 };

@@ -8,7 +8,7 @@ const router = express.Router();
  * /reservations:
  *   get:
  *     summary: Lista todas as reservas
- *     tags: [Reservations]
+ *     tags: [Reservas]
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -24,7 +24,7 @@ router.get('/', verifyToken, getAll);
  * /reservations:
  *   post:
  *     summary: Cria uma nova reserva de equipamento
- *     tags: [Reservations]
+ *     tags: [Reservas]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -34,18 +34,18 @@ router.get('/', verifyToken, getAll);
  *           schema:
  *             type: object
  *             required:
- *               - toolId
- *               - startDate
- *               - endDate
+ *               - ferramentaId
+ *               - dataInicio
+ *               - dataFim
  *             properties:
- *               toolId:
+ *               ferramentaId:
  *                 type: integer
  *                 example: 1
- *               startDate:
+ *               dataInicio:
  *                 type: string
  *                 format: date
  *                 example: '2025-06-01'
- *               endDate:
+ *               dataFim:
  *                 type: string
  *                 format: date
  *                 example: '2025-06-05'
@@ -64,7 +64,7 @@ router.post('/', verifyToken, create);
  * /reservations/{id}:
  *   delete:
  *     summary: Remove uma reserva
- *     tags: [Reservations]
+ *     tags: [Reservas]
  *     security:
  *       - bearerAuth: []
  *     parameters:

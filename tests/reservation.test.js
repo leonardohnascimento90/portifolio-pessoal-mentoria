@@ -5,7 +5,7 @@ const app = require('../server');
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('Reservations', () => {
+describe('Reservas', () => {
   let token;
 
   before((done) => {
@@ -18,7 +18,7 @@ describe('Reservations', () => {
       });
   });
 
-  it('should get all reservations', (done) => {
+  it('deve obter todas as reservas', (done) => {
     chai.request(app)
       .get('/reservations')
       .set('Authorization', token)
@@ -29,7 +29,7 @@ describe('Reservations', () => {
       });
   });
 
-  it('should create a reservation', (done) => {
+  it('deve criar uma reserva', (done) => {
     chai.request(app)
       .post('/reservations')
       .set('Authorization', token)

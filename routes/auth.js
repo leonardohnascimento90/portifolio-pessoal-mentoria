@@ -11,10 +11,10 @@ const users = [
 // Middleware to verify token
 const verifyToken = (req, res, next) => {
   const token = req.headers['authorization'];
-  if (!token) return res.status(403).send({ auth: false, message: 'No token provided.' });
+  if (!token) return res.status(403).send({ autenticado: false, message: 'Nenhum token fornecido.' });
 
   jwt.verify(token, 'secret-key', (err, decoded) => {
-    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    if (err) return res.status(500).send({ autenticado: false, message: 'Falha ao autenticar token.' });
     req.userId = decoded.id;
     next();
   });
@@ -54,10 +54,10 @@ router.post('/login', (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username);
   if (!user || !bcrypt.compareSync(password, user.password)) {
-    return res.status(401).json({ message: 'Invalid credentials' });
+    return res.status(401).json({ message: 'Credenciais inválidas' });
   }
   const token = jwt.sign({ id: user.id }, 'secret-key', { expiresIn: 86400 });
-  res.json({ auth: true, token });
+  res.json({ autenticado: true, token });
 });
 
 module.exports = { router, verifyToken };

@@ -1,5 +1,5 @@
 const { tools } = require('../utils/data');
-const { mapToolToResponse, mapToolsToResponse } = require('../utils/mappers');
+const { mapToolToResponse, mapToolsToResponse, normalizeToolInput } = require('../utils/mappers');
 
 const getAll = (req, res) => {
   res.json(mapToolsToResponse(tools));
@@ -7,14 +7,15 @@ const getAll = (req, res) => {
 
 const getById = (req, res) => {
   const item = tools.find(t => t.id == req.params.id);
-  if (!item) return res.status(404).json({ message: 'Tool not found' });
+  if (!item) return res.status(404).json({ message: 'Ferramenta não encontrada' });
   res.json(mapToolToResponse(item));
 };
 
 const create = (req, res) => {
-  const { name, category, dailyRate, weeklyRate } = req.body;
+  const normalized = normalizeToolInput(req.body);
+  const { name, category, dailyRate, weeklyRate } = normalized;
   if (!name || !category || dailyRate == null || weeklyRate == null) {
-    return res.status(400).json({ message: 'Missing required fields' });
+    return res.status(400).json({ message: 'Campos obrigatórios ausentes' });
   }
 
   const id = tools.length + 1;
@@ -35,13 +36,11 @@ const updateStatus = (req, res) => {
   const { status } = req.body;
   const validStatuses = ['available', 'unavailable', 'maintenance'];
   if (!validStatuses.includes(status)) {
-    return res.status(400).json({ message: 'Invalid status' });
+    return res.status(400).json({ message: 'Status inválido' });
   }
 
   const item = tools.find(t => t.id == req.params.id);
-  if (!item) return res.status(404).json({ message: 'Tool not found' });
-
-  item.status = status;
+  if (!item) return res.status(404).json({ message: 'Ferramenta não encontrada' });
   res.json(mapToolToResponse(item));
 };
 

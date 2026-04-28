@@ -5,26 +5,26 @@ const app = require('../server');
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('Auth', () => {
-  it('should login with valid credentials', (done) => {
+describe('Autenticação', () => {
+  it('deve fazer login com credenciais válidas', (done) => {
     chai.request(app)
       .post('/auth/login')
       .send({ username: 'admin', password: 'password' })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('auth', true);
+        expect(res.body).to.have.property('autenticado', true);
         expect(res.body).to.have.property('token');
         done();
       });
   });
 
-  it('should not login with invalid credentials', (done) => {
+  it('não deve fazer login com credenciais inválidas', (done) => {
     chai.request(app)
       .post('/auth/login')
       .send({ username: 'admin', password: 'wrong' })
       .end((err, res) => {
         expect(res).to.have.status(401);
-        expect(res.body).to.have.property('message', 'Invalid credentials');
+        expect(res.body).to.have.property('message', 'Credenciais inválidas');
         done();
       });
   });

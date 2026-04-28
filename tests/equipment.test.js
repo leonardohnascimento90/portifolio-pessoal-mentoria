@@ -5,7 +5,7 @@ const app = require('../server');
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('Tools', () => {
+describe('Ferramentas', () => {
   let token;
 
   before((done) => {
@@ -18,7 +18,7 @@ describe('Tools', () => {
       });
   });
 
-  it('should get all tools', (done) => {
+  it('deve obter todas as ferramentas', (done) => {
     chai.request(app)
       .get('/tools')
       .set('Authorization', token)
@@ -29,7 +29,7 @@ describe('Tools', () => {
       });
   });
 
-  it('should get tool by id', (done) => {
+  it('deve obter ferramenta por id', (done) => {
     chai.request(app)
       .get('/tools/1')
       .set('Authorization', token)

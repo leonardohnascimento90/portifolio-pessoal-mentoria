@@ -13,9 +13,9 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Tool Rental API',
+      title: 'API de Aluguel de Ferramentas',
       version: '1.0.0',
-      description: 'API for managing tool rentals',
+      description: 'API para gerenciamento de aluguel de ferramentas',
     },
     servers: [
       {
