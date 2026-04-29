@@ -6,86 +6,80 @@ API REST para gerenciamento de aluguel de ferramentas, com autenticação, contr
 
 ## 📌 Sobre o projeto
 
-Esta API foi desenvolvida para simular um sistema de locação de ferramentas, permitindo:
+Esta API permite:
 
-* Autenticação de usuários
-* Cadastro e consulta de ferramentas
-* Controle de status (disponível, indisponível, manutenção)
-* Criação e validação de reservas
-* Prevenção de conflitos de agendamento
+- Autenticação de usuários  
+- Cadastro e consulta de ferramentas  
+- Controle de status (disponível, indisponível, manutenção)  
+- Criação e validação de reservas  
+- Prevenção de conflitos de agendamento  
+
+Projeto desenvolvido com foco em:
+
+- Boas práticas REST  
+- Testes automatizados  
+- Testes de performance  
+- Organização para portfólio profissional  
 
 ---
 
 ## 🚀 Tecnologias utilizadas
 
-* Node.js
-* Express
-* Swagger (swagger-ui-express / swagger-jsdoc)
-* Mocha + Chai (testes)
-* JavaScript
+- Node.js  
+- Express  
+- Mocha  
+- Chai  
+- K6 (testes de performance)  
 
 ---
 
-## 🔗 Repositório
+## 📂 Estrutura do projeto
 
-Acesse o código do projeto:
-
-👉 https://github.com/leonardohnascimento90/portifolio-pessoal-mentoria
+```
+.
+├── controllers/
+├── routes/
+├── utils/
+├── tests/
+├── performance/
+│   └── tool-rental-api-test.js
+├── server.js
+└── package.json
+```
 
 ---
 
 ## ⚙️ Instalação
 
-Clone o repositório:
-
-```bash
+```
 git clone https://github.com/leonardohnascimento90/portifolio-pessoal-mentoria.git
 cd portifolio-pessoal-mentoria
-```
-
-Instale as dependências:
-
-```bash
 npm install
 ```
 
 ---
 
-## ▶️ Execução
+## ▶️ Executando a aplicação
 
-```bash
+```
 npm start
 ```
 
-A API estará disponível em:
+Servidor rodando em:
 
-```
 http://localhost:3000
-```
-
----
-
-## 📚 Documentação (Swagger)
-
-Acesse:
-
-```
-http://localhost:3000/api-docs
-```
 
 ---
 
 ## 🔐 Autenticação
 
-A API utiliza autenticação baseada em token.
+### Login
 
-### Login:
+POST /auth/login  
 
-```http
-POST /auth/login
+Body:
+
 ```
-
-```json
 {
   "username": "admin",
   "password": "password"
@@ -94,105 +88,63 @@ POST /auth/login
 
 Resposta:
 
-```json
+```
 {
   "autenticado": true,
-  "token": "JWT_TOKEN"
+  "token": "jwt_token"
 }
 ```
 
-Use o token nas requisições:
-
-```
-Authorization: Bearer SEU_TOKEN
-```
-
 ---
 
-## 🧰 Endpoints principais
+## 🛠️ Endpoints principais
 
 ### 🔹 Ferramentas
 
-* `GET /tools` → Lista ferramentas
-* `GET /tools/:id` → Buscar por ID
-* `POST /tools` → Criar ferramenta
-* `PATCH /tools/:id/status` → Atualizar status
+| Método | Endpoint | Descrição |
+|--------|--------|----------|
+| GET | /tools | Lista todas |
+| GET | /tools/:id | Busca por ID |
+| POST | /tools | Cadastra ferramenta |
+| PATCH | /tools/:id/status | Atualiza status |
 
 ---
 
-### 📅 Reservas
+### 🔹 Reservas
 
-* `GET /reservations` → Lista reservas
-* `POST /reservations` → Criar reserva
-* `DELETE /reservations/:id` → Remover reserva
-
----
-
-## 🧠 Regras de negócio
-
-* Não permite reserva com data final menor que inicial
-* Não permite conflito de reservas para a mesma ferramenta
-* Não permite reservar ferramenta inexistente
-* Apenas usuários autenticados acessam endpoints protegidos
+| Método | Endpoint | Descrição |
+|--------|--------|----------|
+| GET | /reservations | Lista reservas |
+| POST | /reservations | Cria reserva |
 
 ---
 
-## 🧪 Testes
+## 🧪 Testes automatizados
 
-Executar testes:
+Executar:
 
-```bash
+```
 npm test
 ```
 
-Cobertura inclui:
-
-* Autenticação
-* Ferramentas
-* Reservas
-* Validações e regras de negócio
-
 ---
 
-## 📁 Estrutura do projeto
+## 📊 Testes de Performance com K6
+
+### ▶️ Executar testes
 
 ```
-├── controllers
-├── routes
-├── tests
-├── utils
-├── server.js
+BASE_URL=http://localhost:3000 k6 run performance/tool-rental-api-test.js
 ```
 
 ---
 
-## 🔒 Variáveis de ambiente
+## 📌 Repositório
 
-Opcional:
-
-```
-JWT_SECRET=seu_segredo
-PORT=3000
-```
-
----
-
-## 📌 Melhorias futuras
-
-* Integração com banco de dados (PostgreSQL/MongoDB)
-* Cadastro de usuários
-* Paginação e filtros
-* Deploy (Render / Railway / AWS)
-* Logs e monitoramento
+https://github.com/leonardohnascimento90/portifolio-pessoal-mentoria
 
 ---
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Leonardo Nascimento**
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
+Leonardo Nascimento

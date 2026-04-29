@@ -130,7 +130,7 @@ export const options = {
       executor: 'ramping-arrival-rate',
       exec: 'createReservationFlow',
       startRate: 1,
-      timeUnit: '1s',
+      timeUnit: '2s',
       stages: [
         { duration: '20s', target: 2 },
         { duration: '1m', target: 5 },
