@@ -1,5 +1,6 @@
 // In-memory data
-let tools = [
+
+const tools = [
   { id: 1, name: 'Furadeira / Parafusadeira', category: 'Elétrica', dailyRate: 50, weeklyRate: 250, status: 'available' },
   { id: 2, name: 'Serra elétrica', category: 'Elétrica', dailyRate: 80, weeklyRate: 400, status: 'available' },
   { id: 3, name: 'Esmerilhadeira', category: 'Elétrica', dailyRate: 60, weeklyRate: 300, status: 'available' },
@@ -10,6 +11,22 @@ let tools = [
   { id: 8, name: 'Serra de bancada', category: 'Elétrica', dailyRate: 120, weeklyRate: 600, status: 'available' },
 ];
 
-let reservations = [];
+const reservations = [];
 
-module.exports = { tools, reservations };
+/**
+ * ⚠️ IMPORTANTE PARA TESTES:
+ * Permite resetar os dados entre execuções
+ */
+const resetData = () => {
+  reservations.length = 0;
+
+  tools.forEach(tool => {
+    tool.status = 'available';
+  });
+};
+
+module.exports = {
+  tools,
+  reservations,
+  resetData,
+};
